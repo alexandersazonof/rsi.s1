@@ -7,8 +7,29 @@ docker build -t rsi .
 docker run -d rsi
 ```
 
-### Service
+### Environments
+```
+export SYMBOLS_FILE_PATH="/root/rsi.s1/data/symbols_v2.txt"
+```
 
+### Logs
+
+```bash
+systemctl status systemd-journald
+```
+
+Edit `sudo nano /etc/systemd/journald.conf`
+
+```
+[Journal]
+Storage=persistent
+```
+Restart
+```bash
+sudo systemctl restart systemd-journald
+```
+
+### Service
 Create service in `/etc/systemd/system/`
 
 ```bash
@@ -22,7 +43,7 @@ Description=Py script
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /root/rsi/main.py
+ExecStart=/root/rsi.s1/.venv/bin/python3 /root/rsi.s1/main.py
 Restart=on-failure
 
 [Install]
@@ -33,6 +54,11 @@ WantedBy=multi-user.target
 ```bash
 sudo systemctl start rsi.service
 sudo systemctl enable rsi.service
+```
+
+### Status
+```bash
+sudo systemctl status rsi.service
 ```
 
 ### Logs

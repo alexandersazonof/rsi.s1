@@ -3,6 +3,7 @@ import asyncio
 import pandas as pd
 from ta.momentum import RSIIndicator
 import ast
+import os
 
 async def get_futures_data(session, symbol, interval, limit=200):
     url = f"https://fapi.binance.com/fapi/v1/klines"
@@ -39,7 +40,7 @@ async def monitor_rsi(session, symbol):
         await asyncio.sleep(60)
 
 async def main():
-    file_path = 'data/symbols_v2.txt'
+    file_path = os.getenv('SYMBOLS_FILE_PATH', 'data/symbols_v2.txt')
     with open(file_path, 'r') as file:
         symbols_str = file.read()
         symbols = ast.literal_eval(symbols_str)
