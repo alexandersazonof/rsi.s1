@@ -3,7 +3,10 @@ import asyncio
 import pandas as pd
 from ta.momentum import RSIIndicator
 import ast
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 async def get_futures_data(session, symbol, interval, limit=200):
     url = f"https://fapi.binance.com/fapi/v1/klines"

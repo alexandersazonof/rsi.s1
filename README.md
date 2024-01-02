@@ -7,9 +7,9 @@ docker build -t rsi .
 docker run -d rsi
 ```
 
-### Environments
+### Create .env
 ```
-export SYMBOLS_FILE_PATH="/root/rsi.s1/data/symbols_v2.txt"
+SYMBOLS_FILE_PATH=/root/rsi.s1/data/symbols_v2.txt
 ```
 
 ### Logs
@@ -43,6 +43,7 @@ Description=Py script
 After=network.target
 
 [Service]
+Environment="SYMBOLS_FILE_PATH=/root/rsi.s1/data/symbols_v2.txt"
 ExecStart=/root/rsi.s1/.venv/bin/python3 /root/rsi.s1/main.py
 Restart=on-failure
 
@@ -59,6 +60,11 @@ sudo systemctl enable rsi.service
 ### Status
 ```bash
 sudo systemctl status rsi.service
+```
+
+### Restart
+```bash
+sudo systemctl restart rsi.service
 ```
 
 ### Logs
